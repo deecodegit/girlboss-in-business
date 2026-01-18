@@ -1,0 +1,31 @@
+restaurant_id,restaurant_name,city,rating,is_cloud_kitchen
+101,"Spice Hub",Mumbai,4.3,0
+102,"Burger Box",Delhi,4.1,1
+103,"Green Bowl",Pune,4.6,0
+104,"Pizza Planet",Mumbai,3.9,1
+105,"Curry House",Delhi,4.4,0
+106,"Wok Express",Bangalore,4.2,1
+107,"Healthy Bites",Mumbai,4.7,0
+108,"Tandoori Tales",Delhi,4,0
+109,"Urban Cafe",Pune,4.1,1
+110,"South Spice",Bangalore,4.5,0
+111,"Roll Factory",Mumbai,3.8,1
+112,"Biryani Adda",Delhi,4.6,0
+113,"Salad Stop",Pune,4.4,0
+114,"Pasta Street",Bangalore,4,1
+115,"Street Chaat",Mumbai,3.9,0
+116,"Grill Nation",Delhi,4.5,0
+117,"Vegan Vault",Pune,4.7,0
+118,"Quick Bites",Bangalore,3.7,1
+119,"Punjabi Dhaba",Mumbai,4.2,0
+120,"Wrap World",Delhi,4.1,1
+121,"Soup Studio",Pune,4.3,0
+122,"Rice Bowl",Bangalore,4,1
+123,"Dessert Den",Mumbai,4.6,0
+124,"Mexican Mania",Delhi,3.8,1
+125,"Mediterranean Mezze",Pune,4.5,0
+126,"Noodle Nation",Bangalore,4.2,1
+127,"BBQ Bliss",Mumbai,4.4,0
+128,"The Breakfast Club",Delhi,4.3,0
+129,"Smoothie Bar",Pune,4.1,1
+130,"Fast Feast",Bangalore,3.9,1
