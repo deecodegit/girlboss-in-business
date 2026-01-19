@@ -505,33 +505,94 @@ FROM customers;
 10. Identify restaurants that have never received a cancelled order. */
 
 -- 1
-
+SELECT
+	order_id,
+    order_value,
+    delivery_fee,
+	(order_value - delivery_fee) AS net_order_value
+FROM orders
+ORDER BY net_order_value DESC;
 
 -- 2
-
+SELECT 
+	customer_id,
+    COUNT(order_id) AS orders
+FROM orders
+GROUP BY customer_id
+HAVING COUNT(order_id) > 1;
 
 -- 3
-
+SELECT 
+	restaurant_id,
+    SUM(order_value) AS restaurant_revenue
+FROM orders
+WHERE order_status = 'Delivered'
+GROUP BY restaurant_id
+ORDER BY restaurant_revenue DESC;
 
 -- 4
-
+SELECT
+    order_id,
+    CASE
+        WHEN order_value > 500 THEN 'High'
+        WHEN order_value BETWEEN 300 AND 500 THEN 'Medium'
+        ELSE 'Low'
+    END AS order_value_category
+FROM orders
+ORDER BY order_value DESC;
 
 -- 5
-
+SELECT 
+	restaurants.city,
+    AVG(orders.order_value) AS avg_order_value
+FROM orders
+JOIN restaurants
+	ON orders.restaurant_id = restaurants.restaurant_id
+GROUP BY restaurants.city
+HAVING avg_order_value > 400;
 
 -- 6
-
+SELECT
+	SUM(CASE WHEN order_status = 'Cancelled' THEN 1 ELSE 0 END) / COUNT(order_id) * 100.0 AS percent_cancelled
+FROM orders;
 
 -- 7
-
+SELECT
+    restaurant_id,
+    AVG(order_value) AS restaurant_avg
+FROM orders
+GROUP BY restaurant_id
+HAVING AVG(order_value) >
+       (SELECT AVG(order_value) FROM orders);
 
 -- 8
-
+SELECT
+	COUNT(CASE WHEN customers.is_premium = 1 THEN orders.order_id END) AS premium_orders,
+    COUNT(CASE WHEN customers.is_premium = 0 THEN orders.order_id END) AS non_premium_orders
+FROM orders
+JOIN customers
+	ON orders.customer_id = customers.customer_id;
 
 -- 9
-
+SELECT
+    CASE
+        WHEN order_date BETWEEN '2023-08-01' AND '2023-08-31' THEN 'August'
+        WHEN order_date BETWEEN '2023-09-01' AND '2023-09-30' THEN 'September'
+        WHEN order_date BETWEEN '2023-10-01' AND '2023-10-31' THEN 'October'
+        ELSE 'November'
+    END AS monthly_order_category,
+    COUNT(order_id) AS monthly_orders
+FROM orders
+GROUP BY monthly_order_category
+ORDER BY monthly_orders DESC;
 
 -- 10
+SELECT
+    restaurant_id,
+    COUNT(order_id) AS total_orders
+FROM orders
+GROUP BY restaurant_id
+HAVING SUM(CASE WHEN order_status = 'Cancelled' THEN 1 ELSE 0 END) = 0;
 
 /* QUESTIONS (HOTS):
 1. Which city is least profitable after deducting delivery fees?
