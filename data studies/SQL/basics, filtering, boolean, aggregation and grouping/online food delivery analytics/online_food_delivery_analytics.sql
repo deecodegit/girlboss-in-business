@@ -289,3 +289,34 @@ SELECT
 	order_id
 FROM orders
 WHERE order_status = 'Delivered';
+
+-- 6
+SELECT 
+	customer_name AS user_name
+FROM customers;
+
+-- 7
+SELECT
+	order_id
+FROM orders
+WHERE delivery_fee > 30
+ORDER BY order_id DESC;
+
+-- 8
+SELECT 
+	restaurant_name AS cloud_kitchens
+FROM restaurants
+WHERE is_cloud_kitchen = 1;
+
+-- 9
+SELECT
+	customer_id,
+    customer_name
+FROM customers
+WHERE signup_date > '2023-04-01';
+
+-- 10
+SELECT 
+	order_id
+FROM orders
+ORDER BY order_value DESC;
