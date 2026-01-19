@@ -406,3 +406,173 @@ SELECT
 FROM orders
 WHERE order_date BETWEEN '2023-08-01' AND '2023-08-31'
 ORDER BY order_date DESC;
+
+/* QUESTIONS (HARD):
+Count total number of orders.
+Find the total revenue generated (order_value).
+Calculate average order value per city.
+Find total number of orders per restaurant.
+Show only restaurants with more than 1 order.
+Find max, min, and avg order value.
+Count how many delivered vs cancelled orders exist.
+Calculate total delivery fee collected per city.
+Find average rating of cloud kitchens vs non-cloud kitchens.
+Show number of premium vs non-premium customers. */
+
+-- 1
+SELECT
+	COUNT(order_id) AS total_orders
+FROM orders;
+
+-- 2
+SELECT
+	SUM(CASE WHEN order_status = 'Delivered' THEN order_value ELSE 0 END) AS total_revenue
+FROM orders;
+
+-- 3
+SELECT
+    restaurants.city,
+    AVG(orders.order_value) AS avg_order_value
+FROM orders
+JOIN restaurants 
+    ON orders.restaurant_id = restaurants.restaurant_id
+WHERE orders.order_status = 'Delivered'
+GROUP BY restaurants.city;
+
+-- 4
+SELECT
+	COUNT(order_id) AS total_orders,
+    restaurant_id
+FROM orders
+GROUP BY restaurant_id
+ORDER BY restaurant_id ASC;
+
+-- 5
+SELECT
+	restaurant_id
+FROM orders
+GROUP BY restaurant_id
+HAVING COUNT(order_id) > 1;
+
+-- 6
+SELECT
+	MAX(order_value) AS max_order_value,
+    MIN(order_value) AS min_order_value,
+    AVG(order_value) AS avg_order_value
+FROM orders;
+
+-- 7
+SELECT
+	SUM(CASE WHEN order_status = 'Delivered' THEN 1 ELSE 0 END) AS orders_delivered,
+    SUM(CASE WHEN order_status = 'Cancelled' THEN 1 ELSE 0 END) AS orders_cancelled
+FROM orders;
+
+-- 8
+SELECT
+	restaurants.city,
+    SUM(orders.delivery_fee) AS total_delivery_fee
+FROM orders 
+JOIN restaurants
+	ON orders.restaurant_id = restaurants.restaurant_id
+WHERE orders.order_status = 'Delivered'
+GROUP BY restaurants.city;
+
+-- 9
+SELECT
+	AVG(CASE WHEN is_cloud_kitchen = 1 THEN rating END) AS avg_rating_cloud_kitchen,
+    AVG(CASE WHEN is_cloud_kitchen = 0 THEN rating END) AS avg_rating_non_cloud_kitchen
+FROM restaurants;
+
+-- 10
+SELECT
+	SUM(CASE WHEN is_premium = 1 THEN 1 ELSE 0 END) AS premium_customers,
+    SUM(CASE WHEN is_premium = 0 THEN 1 ELSE 0 END) AS non_premium_customers
+FROM customers;
+
+/* QUESTIONS (VERY HARD):
+1. Calculate net order value (order_value - delivery_fee) for each order.
+2. Find customers who have placed more than 1 order.
+3. Show revenue per restaurant only for delivered orders.
+4. Categorize orders as:
+	- High Value (>500)
+	- Medium Value (300–500)
+	- Low Value (<300)
+5. Find cities where average order value is greater than ₹400.
+6. Calculate % of cancelled orders.
+7. Find restaurants whose average order value > overall average.
+8. Count premium customer orders vs non-premium customer orders.
+9. Show monthly order count.
+10. Identify restaurants that have never received a cancelled order. */
+
+-- 1
+
+
+-- 2
+
+
+-- 3
+
+
+-- 4
+
+
+-- 5
+
+
+-- 6
+
+
+-- 7
+
+
+-- 8
+
+
+-- 9
+
+
+-- 10
+
+/* QUESTIONS (HOTS):
+1. Which city is least profitable after deducting delivery fees?
+2. Are premium users actually ordering higher-value orders? Prove with data.
+3. Identify restaurants that rely heavily on discounted delivery (0 fee).
+4. If free delivery is given for orders > ₹500, how many orders qualify?
+5. Rank cities by average order value.
+6. Find customers who order frequently but spend less.
+7. Which restaurant would you remove from the platform and why (data-backed)?
+8. Simulate a policy:
+	“Remove cloud kitchens with rating < 4 and avg order value < 350” — who gets removed?
+9. Create a profitability flag per order:
+	- Profitable if net value > 400
+	- Loss
+10. From data alone, suggest one business strategy improvement. */
+
+-- 1
+
+
+-- 2
+
+
+-- 3
+
+
+-- 4
+
+
+-- 5
+
+
+-- 6
+
+
+-- 7
+
+
+-- 8
+
+
+-- 9
+
+
+-- 10
