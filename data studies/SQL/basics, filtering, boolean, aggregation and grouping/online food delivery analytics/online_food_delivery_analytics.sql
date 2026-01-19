@@ -250,7 +250,7 @@ SELECT * FROM restaurants;
 
 SELECT * FROM orders;
 
-/* QUESTIONS:
+/* QUESTIONS (EASY):
 1. Show all columns from the customers table.
 2. List customer names and cities only.
 3. Show all distinct cities where customers live.
@@ -320,3 +320,89 @@ SELECT
 	order_id
 FROM orders
 ORDER BY order_value DESC;
+
+/* QUESTIONS (MEDIUM):
+1. Find all orders with value between ₹300 and ₹600.
+2. List customers from Mumbai or Delhi who are premium.
+3. Show restaurants with rating ≥ 4.2.
+4. Find orders where status is not delivered.
+5. Display customers whose names start with ‘A’.
+6. Show all orders with zero delivery fee.
+7. List distinct restaurant IDs that received orders.
+8. Sort orders by date and then by order value.
+9. Find customers who are not premium.
+10. Show orders placed in August 2023. */
+
+-- 1
+SELECT 
+	order_id,
+    order_value
+FROM orders
+WHERE order_value BETWEEN 300 AND 600
+ORDER BY order_value DESC;
+
+-- 2
+SELECT 
+	customer_id,
+    customer_name,
+    city,
+    is_premium
+FROM customers
+WHERE (city = 'Mumbai' OR city = 'Delhi') AND is_premium = 1;
+
+-- 3
+SELECT 
+	restaurant_name,
+    rating
+FROM restaurants
+WHERE rating >= 4.2
+ORDER BY rating DESC;
+
+-- 4
+SELECT
+	order_id,
+    order_status
+FROM orders
+WHERE order_status != 'Delivered';
+
+-- 5
+SELECT 
+	customer_id,
+    customer_name
+FROM customers
+WHERE customer_name LIKE 'a%';
+
+-- 6
+SELECT 
+	order_id,
+    delivery_fee
+FROM orders
+WHERE delivery_fee = 0;
+
+-- 7
+SELECT DISTINCT restaurant_id
+FROM orders;
+
+-- 8
+SELECT 
+	order_id, 
+    order_date, 
+    order_value
+FROM orders
+ORDER BY order_date DESC, order_value DESC;
+
+-- 9
+SELECT
+	customer_id,
+    customer_name,
+    is_premium
+FROM customers
+WHERE is_premium = 0;
+
+-- 10
+SELECT 
+	order_id,
+    order_date
+FROM orders
+WHERE order_date BETWEEN '2023-08-01' AND '2023-08-31'
+ORDER BY order_date DESC;
