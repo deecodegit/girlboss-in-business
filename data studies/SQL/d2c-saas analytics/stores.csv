@@ -1,0 +1,51 @@
+store_id,city,store_type,opened_date
+1,Delhi,High Street,2022-06-02
+2,Kolkata,Outlet,2021-04-22
+3,Hyderabad,Mall,2020-05-20
+4,Mumbai,Outlet,2019-04-06
+5,Hyderabad,Mall,2019-06-29
+6,Kolkata,Mall,2018-05-27
+7,Mumbai,Mall,2022-06-12
+8,Bangalore,Outlet,2022-03-14
+9,Kolkata,Outlet,2019-08-15
+10,Chennai,Mall,2020-08-17
+11,Hyderabad,High Street,2021-12-04
+12,Chennai,High Street,2020-10-21
+13,Pune,High Street,2020-06-15
+14,Mumbai,Outlet,2018-03-23
+15,Chennai,Outlet,2019-10-23
+16,Pune,High Street,2018-02-22
+17,Mumbai,Mall,2021-10-12
+18,Kolkata,Outlet,2021-04-17
+19,Mumbai,Outlet,2022-08-10
+20,Bangalore,Outlet,2018-03-24
+21,Kolkata,Mall,2020-08-21
+22,Pune,Outlet,2020-06-24
+23,Bangalore,Mall,2021-04-13
+24,Chennai,Outlet,2022-07-26
+25,Chennai,Mall,2020-08-20
+26,Bangalore,High Street,2019-11-14
+27,Bangalore,Outlet,2018-08-03
+28,Kolkata,Mall,2019-11-07
+29,Chennai,Outlet,2020-10-11
+30,Bangalore,Outlet,2020-03-31
+31,Kolkata,Outlet,2018-03-17
+32,Chennai,Mall,2019-10-07
+33,Bangalore,High Street,2018-08-26
+34,Kolkata,High Street,2022-11-07
+35,Pune,Mall,2021-09-08
+36,Kolkata,Outlet,2020-08-04
+37,Chennai,Mall,2019-01-20
+38,Pune,High Street,2021-06-29
+39,Kolkata,High Street,2021-07-04
+40,Chennai,Mall,2019-02-21
+41,Bangalore,Outlet,2018-09-26
+42,Bangalore,High Street,2022-12-09
+43,Hyderabad,High Street,2018-09-06
+44,Mumbai,Outlet,2021-05-31
+45,Kolkata,Mall,2021-12-24
+46,Delhi,High Street,2021-02-02
+47,Mumbai,Outlet,2020-04-15
+48,Mumbai,Mall,2022-09-20
+49,Mumbai,High Street,2018-08-29
+50,Hyderabad,Mall,2020-10-17
