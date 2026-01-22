@@ -713,6 +713,110 @@ ORDER BY
         avg_order_value ASC;
 
 -- 9
-
+SELECT 
+    order_id,
+    order_value,
+    delivery_fee,
+    (order_value - delivery_fee) AS net_value,
+    CASE
+        WHEN (order_value - delivery_fee) >= 400 THEN 'profitable'
+        ELSE 'loss'
+    END AS order_type
+FROM orders
+ORDER BY order_id ASC;
 
 -- 10
+-- Analysing to optimise profitability after delivery costs
+-- i: How many orders are actually profitable?
+SELECT
+    CASE
+        WHEN order_value - delivery_fee > 400 THEN 'Profitable'
+        ELSE 'Loss'
+    END AS profitability_status,
+    COUNT(*) AS order_count
+FROM orders
+GROUP BY profitability_status;
+/* 
+RESULT: 68 profitable orders and 52 loss making orders.
+INSIGHT: Since more orders are profitable:
+- Profit leaks (if any) are concentrated, thus require targeted fixes.
+- Delivery fees are mostly reasonable, thus require threshold-based incentives.
+- Growth can be pursued selectively. 
+*/
+
+-- ii: Are free-delivery orders causing losses?
+SELECT
+    CASE
+        WHEN delivery_fee = 0 THEN 'Free Delivery'
+        ELSE 'Paid Delivery'
+    END AS delivery_type,
+    COUNT(*) AS orders,
+    AVG(order_value - delivery_fee) AS avg_net_value
+FROM orders
+GROUP BY delivery_type;
+/* 
+RESULT: Average net value (881.2500) in free-delivery orders is higher than that of paid deliveries (408.1250).
+INSIGHT: Since free-delivery orders are profitable:
+- Free delivery encourages larger carts thus increasing net value. This means free-delivery is a growth lever.
+- Removing free delivery can make high-value customers decrease cart size, thus affecting revenue.
+- To prevent losses and protect profits incurred, free-delivery must be threshold-based.
+*/
+
+-- iii: Which restaurants rely heavily on free delivery?
+SELECT
+    restaurant_id,
+    COUNT(*) AS total_orders,
+    SUM(CASE WHEN delivery_fee = 0 THEN 1 ELSE 0 END) AS free_delivery_orders
+FROM orders
+GROUP BY restaurant_id
+HAVING free_delivery_orders / total_orders > 0.6;
+/* 
+RESULT: These restaurants attract orders only when discounts are offered.
+INSIGHT: Since they're free-delivery dependent:
+- They don't generate strong organic-demand which is why they increase operational load. Discount dependency must be reduced here.
+- Since they contribute minimum profits, enforcing minimum order thresholds is important.
+- They distort performance metrics which implies that they shall be deprioritized/removed.
+*/
+
+-- iv: Are premium users more profitable?
+SELECT
+    c.is_premium,
+    AVG(o.order_value - o.delivery_fee) AS avg_net_value
+FROM orders o
+JOIN customers c ON o.customer_id = c.customer_id
+GROUP BY c.is_premium;
+/* 
+RESULT: Premium users offer higher AOV (574.1667) than non-premium users (431.3333).
+INSIGHT: Since they're more profitable, incentives should target them to increase repetitive ordering and reduce churn.
+*/
+
+/* 
+1. Preserve What’s Working (Core Economics Are Healthy)
+- Majority of orders are profitable (68 vs 52)
+- Delivery fees are generally reasonable
+➡️ No need for aggressive, platform-wide changes
+➡️ Apply targeted fixes, not blanket cost cuts
+
+Use Free Delivery as a Controlled Growth Lever
+- Free-delivery orders have higher net value
+- Indicates increased basket size, not margin erosion
+➡️ Keep free delivery, but:
+		Apply it only above a minimum order threshold
+		Tie it to premium users and high-value orders
+
+Invest in Premium Users for Higher ROI
+- Premium users show higher AOV
+- More profitable and likely to reorder
+➡️ Incentives should focus on:
+		Retention
+		Repeat ordering
+		Upselling, not deep discounts
+
+Reduce Platform Drag from Discount-Dependent Restaurants
+- Some restaurants attract demand only through discounts
+- They increase operational load with minimal profit
+➡️ Actions:
+		Enforce minimum order values
+		Reduce free-delivery exposure
+		Deprioritize or remove consistently underperforming restaurants
+*/
