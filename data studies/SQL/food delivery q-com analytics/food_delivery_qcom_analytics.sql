@@ -610,28 +610,107 @@ HAVING SUM(CASE WHEN order_status = 'Cancelled' THEN 1 ELSE 0 END) = 0;
 10. From data alone, suggest one business strategy improvement. */
 
 -- 1
-
+SELECT 
+		SUM(orders.order_value - orders.delivery_fee) AS profits_after_deduction,
+        restaurants.city
+FROM orders
+JOIN restaurants
+	ON orders.restaurant_id = restaurants.restaurant_id
+WHERE orders.order_status = 'Delivered'
+GROUP BY restaurants.city
+ORDER BY profits_after_deduction ASC 
+LIMIT 1;
 
 -- 2
-
+SELECT 
+	CASE
+		WHEN customers.is_premium = 1 THEN 'premium_user'
+        WHEN customers.is_premium = 0 THEN 'non_premium_user'
+	END AS user_type,
+    SUM(CASE WHEN orders.order_status = 'Delivered' THEN orders.order_value ELSE 0 END) AS final_value
+    FROM orders
+    JOIN customers
+		ON orders.customer_id = customers.customer_id
+	GROUP BY user_type
+	ORDER BY final_value DESC;
 
 -- 3
-
+SELECT
+		restaurants.restaurant_id, 
+        restaurants.restaurant_name,
+        COUNT(orders.order_id) AS free_delivery
+FROM orders
+JOIN restaurants
+	ON orders.restaurant_id = restaurants.restaurant_id
+WHERE delivery_fee = 0
+GROUP BY restaurants.restaurant_id, restaurants.restaurant_name;
 
 -- 4
-
+SELECT 
+		SUM(CASE WHEN order_value > 500 THEN 1 ELSE 0 END) AS applicable_discount
+FROM orders;
 
 -- 5
-
+SELECT 
+		restaurants.city,
+        AVG(orders.order_value) AS avg_value
+FROM orders
+JOIN restaurants
+	ON orders.restaurant_id = restaurants.restaurant_id
+GROUP BY restaurants.city
+ORDER BY avg_value DESC;
 
 -- 6
-
+SELECT
+    customers.customer_id,
+    customers.customer_name,
+    COUNT(orders.order_id) AS frequency,
+    AVG(orders.order_value) AS avg_order_value
+FROM orders
+JOIN customers
+    ON orders.customer_id = customers.customer_id
+GROUP BY customers.customer_id, customers.customer_name
+HAVING COUNT(orders.order_id) > 1 AND AVG(orders.order_value) < 500
+ORDER BY frequency DESC;
 
 -- 7
-
+SELECT 
+    restaurants.restaurant_id,
+    restaurants.restaurant_name,
+    restaurants.city,
+    COUNT(orders.order_id) AS total_orders,
+    SUM(orders.order_value) AS total_revenue,
+    AVG(orders.order_value) AS avg_order_value,
+    SUM(CASE WHEN orders.order_status = 'Cancelled' THEN 1 ELSE 0 END) AS cancelled_orders,
+    ROUND(
+        SUM(CASE WHEN orders.order_status = 'Cancelled' THEN 1 ELSE 0 END) * 1.0 
+        / COUNT(orders.order_id),
+        2
+    ) AS cancellation_rate
+FROM orders 
+JOIN restaurants 
+    ON orders.restaurant_id = restaurants.restaurant_id
+GROUP BY restaurants.restaurant_id, restaurants.restaurant_name, restaurants.city
+ORDER BY 
+    cancellation_rate DESC,
+    total_revenue ASC,
+    avg_order_value ASC
+LIMIT 1;
 
 -- 8
-
+SELECT
+		restaurants.restaurant_id,
+        restaurants.restaurant_name,
+		restaurants.rating,
+        AVG(CASE WHEN orders.order_status = 'Delivered' THEN orders.order_value END) AS avg_order_value
+FROM orders
+JOIN restaurants
+	ON orders.restaurant_id = restaurants.restaurant_id
+GROUP BY restaurants.restaurant_id, restaurants.restaurant_name
+HAVING restaurants.rating < 4 AND AVG(CASE WHEN orders.order_status = 'Delivered' THEN orders.order_value ELSE 0 END) < 350
+ORDER BY 
+		restaurants.rating ASC,
+        avg_order_value ASC;
 
 -- 9
 
