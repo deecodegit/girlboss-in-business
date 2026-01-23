@@ -21,6 +21,24 @@ class Product:
     @classmethod
     def filter_products_by_price(cls, min_price):
         return [product for product in cls.shop if product.price > min_price]
+    
+    @staticmethod
+    def handle_filter():
+        choice = input("do you want to filter products by price? (yes/no): ").strip().lower()
+
+        if choice == "yes":
+            try:
+                min_price = float(input("enter minimum price: "))
+                filtered_products = Product.filter_products_by_price(min_price)
+
+                if not filtered_products:
+                    print("no products found above that price.")
+                else:
+                    print("\nfiltered products:")
+                    for product in filtered_products:
+                        product.display_info()
+            except ValueError:
+                print("invalid price entered.")
 
 # user input to add products
 while True:
@@ -54,46 +72,7 @@ if choice == "yes":
     else:
         print("\nproducts in shop:")
         for product in Product.shop:
-            product.display_info()
-
+            product.display_info() 
+    Product.handle_filter()
 else:
-    choice = input("do you want to filter products by price? (yes/no): ").strip().lower()
-
-    if choice == "yes":
-        try:
-            min_price = float(input("enter minimum price: "))
-            filtered_products = Product.filter_products_by_price(min_price)
-
-            if not filtered_products:
-                print("no products found above that price.")
-            else:
-                print("\nfiltered products:")
-                for product in filtered_products:
-                    product.display_info()
-
-        except ValueError:
-            print("invalid price entered.")
-
-    else:
-        print("ok, bye.")
-
-# user input to filter products
-choice = input("do you want to filter products by price? (yes/no): ").strip().lower()
-
-if choice == "yes":
-    try:
-        min_price = float(input("enter minimum price: "))
-        filtered_products = Product.filter_products_by_price(min_price)
-
-        if not filtered_products:
-            print("no products found above that price.")
-        else:
-            print("\nfiltered products:")
-            for product in filtered_products:
-                product.display_info()
-
-    except ValueError:
-        print("invalid price entered.")
-
-else:
-    print("ok, bye.")
+    Product.handle_filter()
