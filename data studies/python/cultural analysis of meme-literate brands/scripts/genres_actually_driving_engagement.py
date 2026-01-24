@@ -109,3 +109,12 @@ insight:
 
 when brands explicitly attach themselves to memes, average sentiment shifts negative.
 """
+
+"""
+HOW CAN BRANDS USE THIS ANALYSIS?
+
+brands should:
+    - favor genre-native humor (especially shitpost/ironic tones)
+    - minimize visible campaign framing
+    - prioritize shareability over raw likes
+"""
