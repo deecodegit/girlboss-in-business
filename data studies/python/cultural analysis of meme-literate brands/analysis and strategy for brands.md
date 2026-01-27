@@ -1,4 +1,4 @@
-**ANALYSING MEMES FOR BRAND CULTURAL RELEVANCE** 
+## **ANALYSING MEMES FOR BRAND CULTURAL RELEVANCE** 
 
 **overall campaign success probability: 17.5%** which means: memes are a **high-risk cultural instrument**, not a default growth lever.
 
@@ -14,7 +14,7 @@ memes punish:
 * institutional chaos  
 * brands trying to cosplay personality
 
-**BRAND STRATEGY BY TYPE**  
+## **BRAND STRATEGY BY TYPE**  
 **1\. fashion / lifestyle brands *(highest success probability \~27%)***
 
 ### **what the data says**
@@ -160,4 +160,19 @@ memes punish:
 * chase virality  
 * adopt youth slang  
 * blur reporting and marketing
+
+## **CROSS-BRAND RULES**
+### **memes work when:**
+
+* campaign_used = invisible
+* tone < genre (genre leads, brand follows)
+* engagement ≥ 60 before sentiment turns
+* irony > chaos > seriousness
+
+### **memes fail when:**
+
+* wholesome + brand involvement
+* chaos gets institutionalized
+* reach rises but engagement drops
+* sentiment ≤ 0 with high visibility
 
